@@ -9,7 +9,7 @@ import {
   BookOpen,
   Clock,
   Award,
-  Fire,
+  Flame,
   Star
 } from "lucide-react";
 import { Language, SkillLevel } from "@/pages/Index";
@@ -38,7 +38,7 @@ export const Dashboard = ({ selectedLanguage, skillLevel }: DashboardProps) => {
     {
       label: "Streak Days",
       value: "7",
-      icon: Fire,
+      icon: Flame,
       color: "text-orange-600",
       bgColor: "bg-orange-50"
     },

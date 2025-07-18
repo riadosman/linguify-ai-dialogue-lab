@@ -11,7 +11,8 @@ import {
   BookOpen,
   Sparkles,
   Bot,
-  User
+  User,
+  Crown
 } from "lucide-react";
 import { Language, SkillLevel } from "@/pages/Index";
 import { VocabularyHint } from "@/components/VocabularyHint";
