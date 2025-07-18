@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -153,30 +152,30 @@ export const Chat = ({ selectedLanguage, skillLevel, isPremium }: ChatProps) => 
   };
 
   return (
-    <div className="flex h-full">
-      <div className="flex-1 flex flex-col">
+    <div className="flex flex-col lg:flex-row h-full">
+      <div className="flex-1 flex flex-col min-h-0">
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
             >
-              <div className={`max-w-xs lg:max-w-md xl:max-w-lg ${
+              <div className={`max-w-[85%] sm:max-w-xs lg:max-w-md xl:max-w-lg ${
                 message.type === "user" ? "order-2" : "order-1"
               }`}>
                 <div className={`flex items-start gap-2 ${
                   message.type === "user" ? "flex-row-reverse" : "flex-row"
                 }`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center ${
                     message.type === "user" 
                       ? "bg-indigo-600 text-white" 
                       : "bg-emerald-500 text-white"
                   }`}>
-                    {message.type === "user" ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
+                    {message.type === "user" ? <User className="h-3 w-3 lg:h-4 lg:w-4" /> : <Bot className="h-3 w-3 lg:h-4 lg:w-4" />}
                   </div>
                   
-                  <Card className={`p-4 ${
+                  <Card className={`p-3 lg:p-4 ${
                     message.type === "user"
                       ? "bg-indigo-600 text-white"
                       : "bg-white"
@@ -218,10 +217,10 @@ export const Chat = ({ selectedLanguage, skillLevel, isPremium }: ChatProps) => 
           {isTyping && (
             <div className="flex justify-start">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center">
-                  <Bot className="h-4 w-4" />
+                <div className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center">
+                  <Bot className="h-3 w-3 lg:h-4 lg:w-4" />
                 </div>
-                <Card className="p-4 bg-white">
+                <Card className="p-3 lg:p-4 bg-white">
                   <div className="flex items-center gap-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.1s]"></div>
@@ -256,8 +255,8 @@ export const Chat = ({ selectedLanguage, skillLevel, isPremium }: ChatProps) => 
         </div>
       </div>
 
-      {/* Sidebar with hints */}
-      <div className="w-72 border-l bg-gray-50 p-4">
+      {/* Sidebar with hints - Hidden on mobile, toggleable on tablet */}
+      <div className="hidden lg:block w-72 border-l bg-gray-50 p-4">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-gray-900">Learning Tools</h3>

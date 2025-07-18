@@ -27,6 +27,7 @@ const Index = () => {
   const [activeView, setActiveView] = useState<ActiveView>("chat");
   const [showSubscription, setShowSubscription] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -36,15 +37,18 @@ const Index = () => {
           setActiveView={setActiveView}
           isPremium={isPremium}
           onUpgrade={() => setShowSubscription(true)}
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
         />
         
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           <Header 
             selectedLanguage={selectedLanguage}
             onLanguageChange={setSelectedLanguage}
             skillLevel={skillLevel}
             onSkillLevelChange={setSkillLevel}
             isPremium={isPremium}
+            onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
           />
           
           <main className="flex-1 overflow-hidden">
@@ -72,6 +76,14 @@ const Index = () => {
           </main>
         </div>
       </div>
+
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       <SubscriptionModal 
         isOpen={showSubscription}
