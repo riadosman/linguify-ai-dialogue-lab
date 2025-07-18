@@ -1,12 +1,86 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from "react";
+import { Chat } from "@/components/Chat";
+import { Sidebar } from "@/components/Sidebar";
+import { Header } from "@/components/Header";
+import { Dashboard } from "@/components/Dashboard";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { SubscriptionModal } from "@/components/SubscriptionModal";
+
+export type Language = {
+  code: string;
+  name: string;
+  flag: string;
+};
+
+export type SkillLevel = "beginner" | "intermediate" | "advanced";
+
+export type ActiveView = "chat" | "dashboard" | "settings";
 
 const Index = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>({
+    code: "es",
+    name: "Spanish",
+    flag: "🇪🇸"
+  });
+  const [skillLevel, setSkillLevel] = useState<SkillLevel>("beginner");
+  const [activeView, setActiveView] = useState<ActiveView>("chat");
+  const [showSubscription, setShowSubscription] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="flex h-screen">
+        <Sidebar 
+          activeView={activeView}
+          setActiveView={setActiveView}
+          isPremium={isPremium}
+          onUpgrade={() => setShowSubscription(true)}
+        />
+        
+        <div className="flex-1 flex flex-col">
+          <Header 
+            selectedLanguage={selectedLanguage}
+            onLanguageChange={setSelectedLanguage}
+            skillLevel={skillLevel}
+            onSkillLevelChange={setSkillLevel}
+            isPremium={isPremium}
+          />
+          
+          <main className="flex-1 overflow-hidden">
+            {activeView === "chat" && (
+              <Chat 
+                selectedLanguage={selectedLanguage}
+                skillLevel={skillLevel}
+                isPremium={isPremium}
+              />
+            )}
+            {activeView === "dashboard" && (
+              <Dashboard 
+                selectedLanguage={selectedLanguage}
+                skillLevel={skillLevel}
+              />
+            )}
+            {activeView === "settings" && (
+              <LanguageSelector 
+                selectedLanguage={selectedLanguage}
+                onLanguageChange={setSelectedLanguage}
+                skillLevel={skillLevel}
+                onSkillLevelChange={setSkillLevel}
+              />
+            )}
+          </main>
+        </div>
       </div>
+
+      <SubscriptionModal 
+        isOpen={showSubscription}
+        onClose={() => setShowSubscription(false)}
+        onSubscribe={() => {
+          setIsPremium(true);
+          setShowSubscription(false);
+        }}
+      />
     </div>
   );
 };
