@@ -1,8 +1,8 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Crown, Globe, TrendingUp, Menu } from "lucide-react";
 import { Language, SkillLevel } from "@/pages/Index";
+import { useLanguage } from "@/store/useLanguage";
 
 interface HeaderProps {
   selectedLanguage: Language;
@@ -13,15 +13,15 @@ interface HeaderProps {
   onMenuToggle: () => void;
 }
 
-export const Header = ({ 
-  selectedLanguage, 
-  skillLevel, 
+export const Header = ({
+  selectedLanguage,
   isPremium,
-  onMenuToggle 
+  onMenuToggle,
 }: HeaderProps) => {
+  const { level } = useLanguage();
   return (
     <header className="border-b bg-white/80 backdrop-blur-sm px-4 lg:px-6 py-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2 lg:gap-4">
           <Button
             variant="ghost"
@@ -31,21 +31,25 @@ export const Header = ({
           >
             <Menu className="h-5 w-5" />
           </Button>
-          
-          <div className="flex items-center gap-2">
-            <Globe className="h-5 w-5 lg:h-6 lg:w-6 text-indigo-600" />
+
+          <div className="flex items-center gap-4">
+            <img
+              src="/logo.png"
+              alt="logo"
+              className="h-8 w-22 lg:h-12 lg:w-32"
+            />
             <h1 className="text-lg lg:text-xl font-bold text-gray-900 hidden sm:block">
-              LinguaChat
+              AION Language Chatbot
             </h1>
           </div>
-          
+
           <div className="hidden sm:flex items-center gap-2">
             <span className="text-xl lg:text-2xl">{selectedLanguage.flag}</span>
             <span className="font-medium text-gray-700 text-sm lg:text-base">
               {selectedLanguage.name}
             </span>
             <Badge variant="outline" className="capitalize text-xs lg:text-sm">
-              {skillLevel}
+              {level}
             </Badge>
           </div>
         </div>
@@ -57,14 +61,9 @@ export const Header = ({
               <span className="hidden sm:inline">Premium</span>
             </Badge>
           )}
-          
-          <div className="hidden md:flex items-center gap-2 text-xs lg:text-sm text-gray-600">
-            <TrendingUp className="h-3 w-3 lg:h-4 lg:w-4" />
-            <span>67%</span>
-          </div>
         </div>
       </div>
-      
+
       {/* Mobile language info */}
       <div className="sm:hidden mt-2 flex items-center gap-2">
         <span className="text-xl">{selectedLanguage.flag}</span>
@@ -72,7 +71,7 @@ export const Header = ({
           {selectedLanguage.name}
         </span>
         <Badge variant="outline" className="capitalize text-xs">
-          {skillLevel}
+          {level}
         </Badge>
       </div>
     </header>
